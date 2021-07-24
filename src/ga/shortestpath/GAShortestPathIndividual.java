@@ -27,29 +27,22 @@ public class GAShortestPathIndividual implements GAIndividual {
 
 	@Override
 	public void mutation() {
-
+		int codePos = (int) (Math.random() * ((double) path.length));//変異する箇所
+		int mutate = (int) (Math.random() * ((double) (path.length - codePos)));
+		geneCode[codePos] = mutate;
+		setGeneRepresentation(null);
 	}
 
 	@Override
 	public void setGeneCode(Object obj) {
-		int[] order = new int[path.length];
+		ArrayList<Integer> order = new ArrayList<>();
 		for (int i = 0; i < path.length; i++)
-			order[i] = i;
-		for (int i = 0; i < path.length - 1; i++) {
-			int index = 0;
-			for (int j = 0; j < path.length; j++) {
-				if (order[j] == path[i]) {
-					geneCode[i] = index;
-					order[j] = -1;
-					break;
-				} else if (order[j] == -1) {
-					continue;
-				} else {
-					index++;
-					continue;
-				}
-			}
-		}
+			order.add(i);
+		for(int i=0;i<path.length;i++){
+            int codePos=order.indexOf(path[i]);
+            geneCode[i]=codePos;
+            order.remove(codePos);
+        }
 	}
 
 	@Override
@@ -60,12 +53,19 @@ public class GAShortestPathIndividual implements GAIndividual {
 
 	@Override
 	public void setGeneRepresentation(Object obj) {
-
+		ArrayList<Integer> order = new ArrayList<Integer>();
+		for (int i = 0; i < path.length; i++) {
+            order.add(i);
+        }
+		for (int i = 0; i < path.length; i++) {
+            path[i] = order.get(geneCode[i]);
+            order.remove(geneCode[i]);
+        }
 	}
 
 	@Override
 	public Object getGeneRepresentation() {
-		return null;
+		return path;
 	}
 
 	@Override
