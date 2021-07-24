@@ -3,9 +3,10 @@ package ga.shortestpath;
 public class GAShortestPath {
 	
 	public static void main(String[] args) {
+		GAShortestPath gsp=new GAShortestPath();
 		
 	}
 	public GAShortestPath() {
-		// TODO 自動生成されたコンストラクター・スタブ
+		
 	}
 }
